@@ -7,7 +7,6 @@ package com.anwesh.uiprojects.eyeballview
 import android.view.View
 import android.view.MotionEvent
 import android.app.Activity
-import android.graphics.RectF
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Color
@@ -30,21 +29,21 @@ fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale
 fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
 
 fun Canvas.drawTextIndex(i : Int, sf : Float, w : Float, h : Float, paint : Paint) {
-    paint.color = backColor
+    paint.color = foreColor
     val textSize = Math.min(w, h) / textSizeFactor
     paint.textSize = textSize * sf
     save()
-    translate(0f, -h / 2 + textSize)
+    translate(0f, -h / 2 + textSize * sf)
     rotate(rot * sf)
-    drawText("$i", 0f, -textSize / 2, paint)
+    drawText("$i", 0f, -textSize / 4, paint)
     restore()
 }
 fun Canvas.drawEyeBall(i : Int, scale : Float, w : Float, h : Float, paint : Paint) {
     val sf : Float = scale.sinify()
-    val sf1 : Float = sf.divideScale(0, parts)
-    val sf2 : Float = sf.divideScale(1, parts)
-    val sf3 : Float = sf.divideScale(2, parts)
-    val sf4 : Float = sf.divideScale(3, parts)
+    val sf1 : Float = sf.divideScale(0, parts + 1)
+    val sf2 : Float = sf.divideScale(1, parts + 1)
+    val sf3 : Float = sf.divideScale(2, parts + 1)
+    val sf4 : Float = sf.divideScale(3, parts + 1)
     val size : Float = Math.min(w, h) / sizeFactor
     val r : Float = size / ballSizeFactor
     save()
@@ -56,9 +55,10 @@ fun Canvas.drawEyeBall(i : Int, scale : Float, w : Float, h : Float, paint : Pai
         paint.color = foreColor
         drawCircle(-(w / 2 - size) * sf2, 0f, size * sf1, paint)
         save()
+        translate(-(w / 2 - size)* sf2, 0f)
         rotate(rot * sf4)
         paint.color = backColor
-        drawCircle(-size * sf3, 0f, r * sf3 , paint)
+        drawCircle(-(size - r) * sf3, 0f, r * sf3 , paint)
         restore()
         restore()
     }
