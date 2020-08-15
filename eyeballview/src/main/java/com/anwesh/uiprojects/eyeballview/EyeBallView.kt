@@ -197,4 +197,27 @@ class EyeBallView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : EyeBallView) {
+
+        private val animator : Animator = Animator(view)
+        private val eb : EyeBall = EyeBall(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            eb.draw(canvas, paint)
+            animator.animate {
+                eb.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            eb.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
