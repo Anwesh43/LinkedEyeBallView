@@ -11,6 +11,7 @@ import android.graphics.RectF
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Color
+import android.content.Context
 
 val nodes : Int = 5
 val parts : Int = 4
@@ -69,4 +70,18 @@ fun Canvas.drawEBNode(i : Int, scale : Float, paint : Paint) {
     drawEyeBall(i, scale, w, h, paint)
 }
 
+class EyeBallView(ctx : Context) : View(ctx) {
 
+    override fun onDraw(canvas : Canvas) {
+
+    }
+
+    override fun onTouchEvent(event : MotionEvent) : Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+
+            }
+        }
+        return true
+    }
+}
