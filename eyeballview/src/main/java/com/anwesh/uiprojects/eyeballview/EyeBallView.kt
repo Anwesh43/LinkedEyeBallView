@@ -222,4 +222,13 @@ class EyeBallView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : EyeBallView {
+            val view : EyeBallView = EyeBallView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
